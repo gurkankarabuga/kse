@@ -74,15 +74,15 @@ function calculateAll() {
 
     // Assign Carbon Emission Label
     let emissionLabel = '';
-    if (carbonFootprint <= 10000) {
+    if (carbonFootprint <= 25000) {
         emissionLabel = 'A++';
-    } else if (carbonFootprint <= 20000) {
+    } else if (carbonFootprint <= 75000) {
         emissionLabel = 'A+';
-    } else if (carbonFootprint <= 30000) {
+    } else if (carbonFootprint <= 150000) {
         emissionLabel = 'A';
-    } else if (carbonFootprint <= 40000) {
+    } else if (carbonFootprint <= 300000) {
         emissionLabel = 'B';
-    } else if (carbonFootprint <= 50000) {
+    } else if (carbonFootprint <= 500000) {
         emissionLabel = 'C';
     } else {
         emissionLabel = 'D';
