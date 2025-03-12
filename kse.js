@@ -27,6 +27,7 @@ function calculateAll() {
     const materialsForm = document.getElementById('materials-form');
     const processForm = document.getElementById('process-form');
     const productName = document.getElementById('product-name').value;
+    const productQuantity = parseFloat(document.getElementById('product-quantity').value) || 1;
 
     let carbonFootprint = 0;
 
@@ -72,17 +73,20 @@ function calculateAll() {
         carbonFootprint += value * getProcessCoefficient(input.id);
     });
 
+    // Ürün başına karbon ayak izi hesaplaması
+    const carbonFootprintPerProduct = carbonFootprint / productQuantity;
+
     // Assign Carbon Emission Label
     let emissionLabel = '';
-    if (carbonFootprint <= 25000) {
+    if (carbonFootprintPerProduct <= 25000) {
         emissionLabel = 'A++';
-    } else if (carbonFootprint <= 75000) {
+    } else if (carbonFootprintPerProduct <= 75000) {
         emissionLabel = 'A+';
-    } else if (carbonFootprint <= 150000) {
+    } else if (carbonFootprintPerProduct <= 150000) {
         emissionLabel = 'A';
-    } else if (carbonFootprint <= 300000) {
+    } else if (carbonFootprintPerProduct <= 300000) {
         emissionLabel = 'B';
-    } else if (carbonFootprint <= 500000) {
+    } else if (carbonFootprintPerProduct <= 500000) {
         emissionLabel = 'C';
     } else {
         emissionLabel = 'D';
@@ -90,7 +94,7 @@ function calculateAll() {
 
     // Sonuçları Göster
     document.getElementById('product-name-result').innerText = productName;
-    document.getElementById('carbon-result').innerText = carbonFootprint.toFixed(2) + ' kg CO2e';
+    document.getElementById('carbon-result').innerText = carbonFootprintPerProduct.toFixed(2) + ' kg CO2e';
     document.getElementById('serial-number').innerText = generateSerialNumber();
     document.getElementById('emission-label').innerText = emissionLabel;
     document.getElementById('result-container').style.display = 'block';
