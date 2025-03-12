@@ -78,15 +78,15 @@ function calculateAll() {
 
     // Assign Carbon Emission Label
     let emissionLabel = '';
-    if (carbonFootprintPerProduct <= 25000) {
+    if (carbonFootprintPerProduct <= 1) {
         emissionLabel = 'A++';
-    } else if (carbonFootprintPerProduct <= 75000) {
+    } else if (carbonFootprintPerProduct <= 5) {
         emissionLabel = 'A+';
-    } else if (carbonFootprintPerProduct <= 150000) {
+    } else if (carbonFootprintPerProduct <= 10) {
         emissionLabel = 'A';
-    } else if (carbonFootprintPerProduct <= 300000) {
+    } else if (carbonFootprintPerProduct <= 25) {
         emissionLabel = 'B';
-    } else if (carbonFootprintPerProduct <= 500000) {
+    } else if (carbonFootprintPerProduct <= 50) {
         emissionLabel = 'C';
     } else {
         emissionLabel = 'D';
