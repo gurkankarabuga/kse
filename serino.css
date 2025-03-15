@@ -1,0 +1,125 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0b3d0b;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #1b5e20;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #33691e;
+    border-radius: 4px;
+    background-color: #33691e;
+    color: white;
+}
+
+button {
+    background-color: #aed581;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c5e1a5;
+}
+
+h2, h3 {
+    color: white;
+}
+
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1b5e20;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="shortcut icon" href="img/shortcut.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark-theme.css">
+    <script src="script.js"></script>
+    <title>Karbon Salınımı Etiketi Doğrulaması</title>
+    <style>
+        .logo-left, .logo-right {
+            position: fixed;
+            top: -20px;
+            width: 150px; /* Görsel genişliği */
+            height: auto;
+            z-index: 1000;
+        }
+
+        .logo-left {
+            left: -20px;
+        }
+
+        .logo-right {
+            right: -20px;
+        }
+    </style>
+</head>
+<body>
+    <img src="logo.png" alt="Logo" class="logo-left">
+    <img src="logo.png" alt="Logo" class="logo-right">
+
+    <main id="main-content">
+        <h1>Seri Numarası Doğrulama</h1>
+        <label for="serial-number-input">Seri Numarası:</label>
+        <input type="text" id="serial-number-input" name="serial-number-input">
+        <button onclick="verifySerialNumber()">Doğrula</button>
+
+        <div id="result-container" class="result-container" style="display:none;">
+            <h2>Şirket Bilgileri:</h2>
+            <p>Şirket Adı: <span id="company-name"></span></p>
+            <p>Ürün/Hizmet Miktarı: <span id="product-quantity"></span></p>
+            <p>Ürün Adı: <span id="product-name"></span></p>
+            <h2>Toplam Karbon Salınım Miktarı</h2>
+            <p id="carbon-result"></p>
+            <h3>Seri Numarası</h3>
+            <p id="serial-number"></p>
+            <h3>Karbon Emisyon Etiketi</h3>
+            <p id="emission-label"></p>
+        </div>
+    </main>
+</body>
+</html>
