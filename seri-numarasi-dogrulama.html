@@ -7,8 +7,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="shortcut icon" href="img/shortcut.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dark-theme.css">
-    <script src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
+    <link rel="stylesheet" href="serino.css">
     <script src="serino.js"></script>
     <title>Karbon Salınımı Etiketi Doğrulaması</title>
     <style>
@@ -19,26 +18,16 @@
             height: auto;
             z-index: 1000;
         }
-        .logo-left { left: -20px; }
-        .logo-right { right: -20px; }
+        .logo-left {
+            left: -20px;
+        }
+        .logo-right {
+            right: -20px;
+        }
     </style>
 </head>
 <body>
     <img src="logo.png" alt="Logo" class="logo-right">
-
-    <!-- Menü -->
-    <div class="menu-container">
-        <div class="hamburger" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-        <div class="menu" id="menu">
-            <ul>
-                <li><a href="index.html">Karbon Hesaplama</a></li>
-                <li><a href="seri-numarasi-dogrulama.html">Seri No Doğrulama</a></li>
-            </ul>
-        </div>
-    </div>
-
     <main id="main-content">
         <h1>Seri Numarası Doğrulama</h1>
         <label for="serial-number-input">Seri Numarası:</label>
@@ -52,7 +41,7 @@
             <h3>Seri Numarası</h3>
             <p id="serial-number"></p>
             <h3>Karbon Emisyon Etiketi</h3>
-            <p id="emission-label"></p> <!-- Zaten vardı, değişmedi -->
+            <p id="emission-label"></p>
         </div>
     </main>
 </body>
