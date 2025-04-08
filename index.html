@@ -8,37 +8,31 @@
     <link rel="shortcut icon" href="img/shortcut.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="dark-theme.css">
+    <script src="kse.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
-    <script src="ks.js"></script>
     <title>KSE.GOV</title>
     <style>
         .logo-left, .logo-right {
             position: fixed;
             top: -20px;
-            width: 150px;
+            width: 150px; /* Görsel genişliği */
             height: auto;
             z-index: 1000;
         }
-        .logo-left { left: -20px; }
-        .logo-right { right: -20px; }
+
+        .logo-left {
+            left: -20px;
+        }
+
+        .logo-right {
+            right: -20px;
+        }
     </style>
 </head>
 <body>
-    <img src="logo.png" alt="Logo" class="logo-right">
 
-    <!-- Menü -->
-    <div class="menu-container">
-        <div class="hamburger" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-        <div class="menu" id="menu">
-            <ul>
-                <li><a href="index.html">Karbon Hesaplama</a></li>
-                <li><a href="seri-numarasi-dogrulama.html">Seri No Doğrulama</a></li>
-            </ul>
-        </div>
-    </div>
+    <img src="logo.png" alt="Logo" class="logo-right">
 
     <div id="login-screen" class="login-screen">
         <h1>Giriş Yap</h1>
@@ -229,8 +223,7 @@
             <h3>Seri Numarası</h3>
             <p id="serial-number"></p>
             <h3>Karbon Emisyon Etiketi</h3>
-            <p id="emission-label"></p> <!-- Etiketi göstermek için eklendi -->
-            <a href="seri-numarasi-dogrulama.html">Seri Numarasını Doğrula</a>
+            <p id="emission-label"></p>
         </div>
     </main>
 </body>
