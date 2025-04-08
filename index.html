@@ -16,22 +16,19 @@
         .logo-left, .logo-right {
             position: fixed;
             top: -20px;
-            width: 150px; /* Görsel genişliği */
+            width: 150px;
             height: auto;
             z-index: 1000;
         }
-
         .logo-left {
             left: -20px;
         }
-
         .logo-right {
             right: -20px;
         }
     </style>
 </head>
 <body>
-
     <img src="logo.png" alt="Logo" class="logo-right">
 
     <div id="login-screen" class="login-screen">
@@ -139,7 +136,7 @@
                 <label for="incineration">Yakma (kg):</label>
                 <input type="number" id="incineration" name="incineration"><br>
                 
-                <h3>Geri Dönüştürülebilir Atıklar</h3>
+               Lyia/h3>Geri Dönüştürülebilir Atıklar</h3>
                 <label for="paper-recycling">Kağıt (kg):</label>
                 <input type="number" id="paper-recycling" name="paper-recycling"><br>
                 <label for="plastic-recycling">Plastik (kg):</label>
@@ -224,6 +221,7 @@
             <p id="serial-number"></p>
             <h3>Karbon Emisyon Etiketi</h3>
             <p id="emission-label"></p>
+            <button type="button" onclick="window.location.href='seri-numarasi-dogrulama.html'">Seri Numarası Doğrulama</button>
         </div>
     </main>
 </body>

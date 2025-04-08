@@ -108,10 +108,10 @@ function calculateAll() {
     document.getElementById('product-name-result').innerText = productName;
     document.getElementById('carbon-result').innerText = carbonFootprintPerProduct.toFixed(2) + ' kg CO2e';
     document.getElementById('serial-number').innerText = serialNumber;
+    document.getElementById('emission-label').innerText = emissionLabel;
     document.getElementById('result-container').style.display = 'block';
 }
 
-// Katsayı fonksiyonları (değişmeden kalıyor)
 function getEnergyCoefficient(id) {
     const coefficients = {
         'coal-electricity': 0.5,

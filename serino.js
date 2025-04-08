@@ -7,7 +7,7 @@ function verifySerialNumber() {
 
     if (storedData && serialNumberInput === storedData.serialNumber) {
         // Veriler eşleşirse bilgileri göster
-        document.getElementById('product-name').innerText = storedData.productName; // Ürün adını ekledik
+        document.getElementById('product-name').innerText = storedData.productName;
         document.getElementById('carbon-result').innerText = storedData.carbonFootprint;
         document.getElementById('serial-number').innerText = storedData.serialNumber;
         document.getElementById('emission-label').innerText = storedData.emissionLabel;
