@@ -76,7 +76,7 @@ function calculateAll() {
     // Ürün başına karbon ayak izi hesaplaması
     const carbonFootprintPerProduct = carbonFootprint / productQuantity;
 
-    // Assign Carbon Emission Label
+    // Karbon Emisyon Etiketi Belirleme
     let emissionLabel = '';
     if (carbonFootprintPerProduct <= 1) {
         emissionLabel = 'A++';
@@ -92,14 +92,26 @@ function calculateAll() {
         emissionLabel = 'D';
     }
 
+    // Seri numarası oluştur
+    const serialNumber = generateSerialNumber();
+
+    // Sonuçları LocalStorage'a kaydet
+    const resultData = {
+        productName: productName,
+        carbonFootprint: carbonFootprintPerProduct.toFixed(2) + ' kg CO2e',
+        serialNumber: serialNumber,
+        emissionLabel: emissionLabel
+    };
+    localStorage.setItem('carbonEmissionData', JSON.stringify(resultData));
+
     // Sonuçları Göster
     document.getElementById('product-name-result').innerText = productName;
     document.getElementById('carbon-result').innerText = carbonFootprintPerProduct.toFixed(2) + ' kg CO2e';
-    document.getElementById('serial-number').innerText = generateSerialNumber();
-    document.getElementById('emission-label').innerText = emissionLabel;
+    document.getElementById('serial-number').innerText = serialNumber;
     document.getElementById('result-container').style.display = 'block';
 }
 
+// Katsayı fonksiyonları (değişmeden kalıyor)
 function getEnergyCoefficient(id) {
     const coefficients = {
         'coal-electricity': 0.5,

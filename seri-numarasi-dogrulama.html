@@ -14,24 +14,20 @@
         .logo-left, .logo-right {
             position: fixed;
             top: -20px;
-            width: 150px; /* Görsel genişliği */
+            width: 150px;
             height: auto;
             z-index: 1000;
         }
-
         .logo-left {
             left: -20px;
         }
-
         .logo-right {
             right: -20px;
         }
     </style>
 </head>
 <body>
-   
     <img src="logo.png" alt="Logo" class="logo-right">
-
     <main id="main-content">
         <h1>Seri Numarası Doğrulama</h1>
         <label for="serial-number-input">Seri Numarası:</label>
@@ -39,6 +35,7 @@
         <button onclick="verifySerialNumber()">Doğrula</button>
 
         <div id="result-container" class="result-container" style="display:none;">
+            <h2>Ürün Adı: <span id="product-name"></span></h2>
             <h2>Toplam Karbon Salınım Miktarı</h2>
             <p id="carbon-result"></p>
             <h3>Seri Numarası</h3>

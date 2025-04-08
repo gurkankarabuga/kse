@@ -147,6 +147,17 @@ footer .social-media img {
     margin: 0 5px;
 }
 
+/* Seri Numarasını Doğrula bağlantısı için stil */
+.result-container a {
+    color: white; /* Bağlantı rengi beyaz */
+    text-decoration: none; /* Alt çizgiyi kaldır */
+    transition: color 0.3s ease; /* Renk değişim animasyonu */
+}
+
+.result-container a:hover {
+    color: #aed581; /* Fare üzerine gelince yeşil tonu */
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
