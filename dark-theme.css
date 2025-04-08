@@ -147,40 +147,80 @@ footer .social-media img {
     margin: 0 5px;
 }
 
-/* Seri Numarasını Doğrula bağlantısı için stil */
 .result-container a {
-    color: white; /* Bağlantı rengi beyaz */
-    text-decoration: none; /* Alt çizgiyi kaldır */
-    transition: color 0.3s ease; /* Renk değişim animasyonu */
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .result-container a:hover {
-    color: #aed581; /* Fare üzerine gelince yeşil tonu */
+    color: #aed581;
+}
+
+.menu-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+}
+
+.hamburger {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #1b5e20;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #1b5e20;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu.active {
+    display: block;
+}
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    margin: 10px 0;
+}
+
+.menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.menu ul li a:hover {
+    color: #aed581;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
 }
 
 @keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
 }
