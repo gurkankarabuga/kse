@@ -1,112 +1,104 @@
+/* Genel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #E6F4EA;
     color: #1B5E20;
+    line-height: 1.6;
 }
 
+/* Header */
 header {
-    background-color: #E6F4EA;
-    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
 }
 
-header .logo {
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
     font-size: 24px;
     font-weight: bold;
+}
+
+.hamburger {
+    display: none; /* Varsayılan olarak gizli */
+    font-size: 24px;
+    cursor: pointer;
+}
+
+nav ul {
     display: flex;
-    align-items: center;
-}
-
-header .logo a {
-    text-decoration: none;
-    color: #1B5E20;
-    display: flex;
-    align-items: center;
-}
-
-header .logo span {
-    margin-left: 10px;
-}
-
-header nav ul {
     list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    justify-content: flex-start;
-    margin-right: 20px;
 }
 
-header nav ul li {
-    margin: 0 20px;
+nav ul li {
+    margin-left: 20px;
 }
 
-header nav ul li a {
-    color: #1B5E20;
+nav ul li a {
+    color: white;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-size: 16px;
 }
 
-header nav ul li a:hover {
-    color: #4CAF50;
+nav ul li a:hover {
+    color: #E6F4EA;
 }
 
-main {
-    padding: 100px 40px 40px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
+/* Hero Section */
 .hero {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 40px;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #E6F4EA;
 }
 
 .hero-text {
-    max-width: 50%;
+    flex: 1;
+    padding-right: 20px;
 }
 
 .hero-text h1 {
-    font-size: 36px;
+    font-size: 32px;
     margin-bottom: 20px;
-    color: #1B5E20;
 }
 
 .hero-text p {
     font-size: 16px;
-    margin-bottom: 20px;
-    color: #1B5E20;
 }
 
 .hero-image {
-    max-width: 40%;
+    flex: 1;
+    text-align: center;
 }
 
+/* Features Section */
 .features {
     display: flex;
-    justify-content: center;
-    gap: 40px;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: #E6F4EA;
 }
 
 .feature-box {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 30%;
     text-align: center;
-    width: 300px;
 }
 
 .feature-icon {
@@ -118,193 +110,109 @@ main {
 .feature-box h3 {
     font-size: 20px;
     margin-bottom: 10px;
-    color: #1B5E20;
 }
 
 .feature-box p {
     font-size: 14px;
-    color: #1B5E20;
+    margin-bottom: 20px;
 }
 
 .feature-box button {
+    padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
 }
 
 .feature-box button:hover {
-    background-color: #45a049;
+    background-color: #388E3C;
 }
 
-section {
-    margin-bottom: 40px;
-}
+/* Mobil Uyumlu Tasarım */
+@media (max-width: 768px) {
+    /* Header ve Menü */
+    .hamburger {
+        display: block; /* Hamburger menü mobil cihazlarda görünecek */
+    }
 
-h1, h2, h3 {
-    color: #1B5E20;
-}
+    nav ul {
+        display: none; /* Varsayılan olarak menü gizli */
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #4CAF50;
+        padding: 10px 0;
+    }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #1B5E20;
-}
+    nav.nav-active ul {
+        display: flex; /* Menü açıldığında görünecek */
+    }
 
-input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #1B5E20;
-    border-radius: 5px;
-    background-color: white;
-    color: #1B5E20;
-}
+    nav ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.login-screen {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    border: 1px solid #1B5E20;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.result-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    padding: 10px; /* Küçük ekranlarda kenar boşluğu */
-    box-sizing: border-box;
-}
-
-.panel-content {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    max-width: 450px; /* Genişlik biraz küçültüldü */
-    width: 90%;
-    position: relative;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.panel-content h2 {
-    font-size: 18px; /* Yazı boyutu küçültüldü */
-    margin: 5px 0;
-}
-
-.panel-content h3 {
-    font-size: 16px; /* Yazı boyutu küçültüldü */
-    margin: 5px 0;
-}
-
-.panel-content p {
-    font-size: 14px; /* Yazı boyutu küçültüldü */
-    margin: 5px 0;
-}
-
-.panel-content button {
-    padding: 8px 16px; /* Buton boyutu küçültüldü */
-    font-size: 14px; /* Buton yazı boyutu küçültüldü */
-}
-
-.chart-container {
-    width: 100%;
-    max-width: 300px; /* Grafik boyutu küçültüldü */
-    margin: 0 auto;
-}
-
-.close-panel {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 20px; /* Kapatma tuşu boyutu küçültüldü */
-    font-weight: bold;
-    cursor: pointer;
-    color: #1B5E20;
-    background-color: #f0f0f0;
-    border-radius: 50%;
-    width: 25px; /* Kapatma tuşu boyutu küçültüldü */
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-    z-index: 2100;
-}
-
-.close-panel:hover {
-    background-color: #e0e0e0;
-}
-
-/* Küçük ekranlar için ek düzenlemeler */
-@media (max-width: 600px) {
-    .panel-content {
-        max-width: 90%;
+    nav ul li a {
+        font-size: 18px; /* Menü öğeleri için daha büyük yazı tipi */
         padding: 10px;
+        display: block; /* Tıklanabilir alanı genişletir */
     }
 
-    .panel-content h2 {
+    /* Hero Section */
+    .hero {
+        flex-direction: column; /* İçerik dikey sıralanacak */
+        text-align: center;
+        padding: 20px;
+    }
+
+    .hero-text {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 24px; /* Mobil cihazlar için küçültülmüş başlık */
+    }
+
+    .hero-text p {
+        font-size: 16px; /* Daha okunabilir yazı boyutu */
+        line-height: 1.5; /* Satır aralığı artırıldı */
+    }
+
+    .hero-image img {
+        width: 150px; /* Görsel boyutu küçültüldü */
+        height: auto;
+    }
+
+    /* Features Section */
+    .features {
+        flex-direction: column; /* Kartlar dikey sıralanacak */
+        padding: 20px;
+    }
+
+    .feature-box {
+        width: 100%; /* Kartlar tam genişlik alacak */
+        margin-bottom: 20px;
+    }
+
+    .feature-box h3 {
+        font-size: 20px;
+    }
+
+    .feature-box p {
+        font-size: 16px; /* Yazı boyutu artırıldı */
+        line-height: 1.5;
+    }
+
+    .feature-box button {
+        width: 100%; /* Butonlar tam genişlik alacak */
+        padding: 12px 20px; /* Daha geniş tıklama alanı */
         font-size: 16px;
-    }
-
-    .panel-content h3 {
-        font-size: 14px;
-    }
-
-    .panel-content p {
-        font-size: 12px;
-    }
-
-    .panel-content button {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-
-    .chart-container {
-        max-width: 200px; /* Küçük ekranlarda grafik daha küçük */
-    }
-
-    .close-panel {
-        top: 3px;
-        right: 3px;
-        font-size: 18px;
-        width: 20px;
-        height: 20px;
     }
 }
