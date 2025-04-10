@@ -5,43 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel="shortcut icon" href="img/shortcut.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="serino.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="serino.js"></script>
-    <title>Karbon Salınımı Etiketi Doğrulaması</title>
-    <style>
-        .logo-left, .logo-right {
-            position: fixed;
-            top: -20px;
-            width: 150px;
-            height: auto;
-            z-index: 1000;
-        }
-        .logo-left {
-            left: -20px;
-        }
-        .logo-right {
-            right: -20px;
-        }
-    </style>
+    <title>Karbon Salınım Etiketi - Doğrulama</title>
 </head>
 <body>
-    <img src="logo.png" alt="Logo" class="logo-right">
+    <header>
+        <div class="logo">
+            <a href="anasayfa.html">
+                <img src="logo.png" alt="KSE.GOV Logo" style="width: 70px; height: auto; vertical-align: middle;">
+                <span>KSE.GOV</span>
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="duyurular.html">Duyurular</a></li>
+                <li><a href="hakkinda.html">Hakkımızda</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main id="main-content">
         <h1>Seri Numarası Doğrulama</h1>
         <label for="serial-number-input">Seri Numarası:</label>
         <input type="text" id="serial-number-input" name="serial-number-input">
         <button onclick="verifySerialNumber()">Doğrula</button>
 
-        <div id="result-container" class="result-container" style="display:none;">
-            <h2>Ürün Adı: <span id="product-name"></span></h2>
-            <h2>Toplam Karbon Salınım Miktarı</h2>
-            <p id="carbon-result"></p>
-            <h3>Seri Numarası</h3>
-            <p id="serial-number"></p>
-            <h3>Karbon Emisyon Etiketi</h3>
-            <p id="emission-label"></p>
+        <div id="result-panel" class="result-panel" style="display:none;">
+            <div class="panel-content">
+                <span class="close-panel" onclick="closePanel('result-panel')">X</span>
+                <h2>Ürün Adı: <span id="product-name"></span></h2>
+                <h2>Toplam Karbon Salınım Miktarı</h2>
+                <p id="carbon-result"></p>
+                <h3>Seri Numarası</h3>
+                <p id="serial-number"></p>
+                <h3>Karbon Emisyon Etiketi</h3>
+                <p id="emission-label"></p>
+                <h3>Emisyon Dağılımı</h3>
+                <div class="chart-container">
+                    <canvas id="simple-emission-chart"></canvas>
+                </div>
+            </div>
         </div>
     </main>
 </body>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emisyon Hesaplama</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Gömülü Emisyon ve SKDM Sertifikası Hesaplama</h1>
+    
+    <section>
+      <label for="productType">Mal Tipi Seçin:</label>
+      <select id="productType" onchange="toggleInputs()">
+        <option value="">-- Seçiniz --</option>
+        <option value="basit">Basit Mal</option>
+        <option value="kompleks">Kompleks Mal</option>
+      </select>
+
+      <div id="basitInputs" style="display: none;">
+        <label for="directEmissionB">Doğrudan Emisyon (B) [ton CO₂e/ton kütük]:</label>
+        <input type="number" id="directEmissionB" step="0.01" min="0" />
+
+        <button onclick="calculateBasit()">Hesapla</button>
+      </div>
+
+      <div id="kompleksInputs" style="display: none;">
+        <label for="araMalEmission">Ara Mal Gömülü Emisyonu (A veya B) [ton CO₂e/ton]:</label>
+        <input type="number" id="araMalEmission" step="0.01" min="0" />
+
+        <label for="directEmissionA1B1">Doğrudan Emisyon (A1 veya B1) [ton CO₂e/ton]:</label>
+        <input type="number" id="directEmissionA1B1" step="0.01" min="0" />
+
+        <button onclick="calculateKompleks()">Hesapla</button>
+      </div>
+    </section>
+
+    <section id="result" style="display: none;">
+      <h2>Sonuç</h2>
+      <p id="emissionResult"></p>
+      <p id="certificateResult"></p>
+    </section>
+  </main>
+
+  <script>
+    function toggleInputs() {
+      const type = document.getElementById('productType').value;
+      document.getElementById('basitInputs').style.display = type === 'basit' ? 'block' : 'none';
+      document.getElementById('kompleksInputs').style.display = type === 'kompleks' ? 'block' : 'none';
+      document.getElementById('result').style.display = 'none';
+    }
+
+    function calculateBasit() {
+      const B = parseFloat(document.getElementById('directEmissionB').value);
+      if (isNaN(B)) return alert("Lütfen geçerli bir emisyon değeri girin.");
+
+      const emission = B;
+      const certificate = Math.ceil(emission);
+      showResults(emission, certificate);
+    }
+
+    function calculateKompleks() {
+      const ara = parseFloat(document.getElementById('araMalEmission').value);
+      const ek = parseFloat(document.getElementById('directEmissionA1B1').value);
+
+      if (isNaN(ara) || isNaN(ek)) return alert("Lütfen tüm alanları doldurun.");
+
+      const emission = ara + ek;
+      const certificate = Math.ceil(emission);
+      showResults(emission, certificate);
+    }
+
+    function showResults(emission, certificate) {
+      document.getElementById('emissionResult').innerText = `Toplam Gömülü Emisyon: ${emission.toFixed(2)} ton CO₂e/ton`;
+      document.getElementById('certificateResult').innerText = `Gereken SKDM Sertifikası: ${certificate} adet`;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
