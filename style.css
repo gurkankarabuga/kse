@@ -165,6 +165,23 @@ input {
     color: #1B5E20;
 }
 
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #1B5E20;
+    border-radius: 5px;
+    background-color: white;
+    color: #1B5E20;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
 button {
     background-color: #4CAF50;
     color: white;
@@ -207,7 +224,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    padding: 10px; /* Küçük ekranlarda kenar boşluğu */
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -216,7 +233,7 @@ button:hover {
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    max-width: 450px; /* Genişlik biraz küçültüldü */
+    max-width: 450px;
     width: 90%;
     position: relative;
     text-align: center;
@@ -224,28 +241,28 @@ button:hover {
 }
 
 .panel-content h2 {
-    font-size: 18px; /* Yazı boyutu küçültüldü */
+    font-size: 18px;
     margin: 5px 0;
 }
 
 .panel-content h3 {
-    font-size: 16px; /* Yazı boyutu küçültüldü */
+    font-size: 16px;
     margin: 5px 0;
 }
 
 .panel-content p {
-    font-size: 14px; /* Yazı boyutu küçültüldü */
+    font-size: 14px;
     margin: 5px 0;
 }
 
 .panel-content button {
-    padding: 8px 16px; /* Buton boyutu küçültüldü */
-    font-size: 14px; /* Buton yazı boyutu küçültüldü */
+    padding: 8px 16px;
+    font-size: 14px;
 }
 
 .chart-container {
     width: 100%;
-    max-width: 300px; /* Grafik boyutu küçültüldü */
+    max-width: 300px;
     margin: 0 auto;
 }
 
@@ -253,13 +270,13 @@ button:hover {
     position: absolute;
     top: 5px;
     right: 5px;
-    font-size: 20px; /* Kapatma tuşu boyutu küçültüldü */
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     color: #1B5E20;
     background-color: #f0f0f0;
     border-radius: 50%;
-    width: 25px; /* Kapatma tuşu boyutu küçültüldü */
+    width: 25px;
     height: 25px;
     display: flex;
     justify-content: center;
@@ -272,7 +289,6 @@ button:hover {
     background-color: #e0e0e0;
 }
 
-/* Küçük ekranlar için ek düzenlemeler */
 @media (max-width: 600px) {
     .panel-content {
         max-width: 90%;
@@ -297,7 +313,7 @@ button:hover {
     }
 
     .chart-container {
-        max-width: 200px; /* Küçük ekranlarda grafik daha küçük */
+        max-width: 200px;
     }
 
     .close-panel {

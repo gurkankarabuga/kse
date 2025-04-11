@@ -44,8 +44,14 @@ function calculateAll() {
     const materialsForm = document.getElementById('materials-form');
     const processForm = document.getElementById('process-form');
     const productName = document.getElementById('product-name').value;
-    const productQuantity = parseFloat(document.getElementById('product-quantity').value) || 1;
+    const productUnit = document.getElementById('product-unit').value;
+    const productQuantity = parseFloat(document.getElementById('product-quantity').value) || 0.001;
     const vergiNo = localStorage.getItem('vergiNo');
+
+    if (!productName || productQuantity <= 0) {
+        alert('Lütfen geçerli bir ürün adı ve miktar giriniz.');
+        return;
+    }
 
     // Kategorilere göre emisyonları sıfırla
     emissionData = {
@@ -61,61 +67,75 @@ function calculateAll() {
     const energyInputs = energyForm.querySelectorAll('input[type="number"]');
     energyInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.energy += value * getEnergyCoefficient(input.id);
+        emissionData.energy += value * getEnergyCoefficient(input.id, productUnit);
     });
 
     // Ulaşım Hesaplaması
     const transportInputs = transportForm.querySelectorAll('input[type="number"]');
     transportInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.transport += value * getTransportCoefficient(input.id);
+        emissionData.transport += value * getTransportCoefficient(input.id, productUnit);
     });
 
     // Atık Yönetimi Hesaplaması
     const wasteInputs = wasteForm.querySelectorAll('input[type="number"]');
     wasteInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.waste += value * getWasteCoefficient(input.id);
+        emissionData.waste += value * getWasteCoefficient(input.id, productUnit);
     });
 
     // Su Tüketimi ve Atık Su Hesaplaması
     const waterInputs = waterForm.querySelectorAll('input[type="number"]');
     waterInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.water += value * getWaterCoefficient(input.id);
+        emissionData.water += value * getWaterCoefficient(input.id, productUnit);
     });
 
     // Hammadde ve Malzeme Kullanımı Hesaplaması
     const materialsInputs = materialsForm.querySelectorAll('input[type="number"]');
     materialsInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.materials += value * getMaterialsCoefficient(input.id);
+        emissionData.materials += value * getMaterialsCoefficient(input.id, productUnit);
     });
 
     // İşlemler ve Proses Emisyonları Hesaplaması
     const processInputs = processForm.querySelectorAll('input[type="number"]');
     processInputs.forEach(input => {
         const value = parseFloat(input.value) || 0;
-        emissionData.process += value * getProcessCoefficient(input.id);
+        emissionData.process += value * getProcessCoefficient(input.id, productUnit);
     });
 
     // Toplam karbon ayak izi
     let totalCarbonFootprint = emissionData.energy + emissionData.transport + emissionData.waste + emissionData.water + emissionData.materials + emissionData.process;
 
-    // Ürün başına karbon ayak izi hesaplaması
-    let carbonFootprintPerProduct = totalCarbonFootprint / productQuantity;
+    // Birim başına karbon ayak izi hesaplaması
+    let carbonFootprintPerUnit = totalCarbonFootprint / productQuantity;
 
     // Karbon Emisyon Etiketi Belirleme
     let emissionLabel = '';
-    if (carbonFootprintPerProduct <= 1) {
+    const labelThresholds = productUnit === 'kg' ? {
+        'A++': 0.5,
+        'A+': 1.0,
+        'A': 1.5,
+        'B': 2.0,
+        'C': 2.5
+    } : {
+        'A++': 0.4,
+        'A+': 0.8,
+        'A': 1.2,
+        'B': 1.6,
+        'C': 2.0
+    };
+
+    if (carbonFootprintPerUnit <= labelThresholds['A++']) {
         emissionLabel = 'A++';
-    } else if (carbonFootprintPerProduct <= 5) {
+    } else if (carbonFootprintPerUnit <= labelThresholds['A+']) {
         emissionLabel = 'A+';
-    } else if (carbonFootprintPerProduct <= 10) {
+    } else if (carbonFootprintPerUnit <= labelThresholds['A']) {
         emissionLabel = 'A';
-    } else if (carbonFootprintPerProduct <= 25) {
+    } else if (carbonFootprintPerUnit <= labelThresholds['B']) {
         emissionLabel = 'B';
-    } else if (carbonFootprintPerProduct <= 50) {
+    } else if (carbonFootprintPerUnit <= labelThresholds['C']) {
         emissionLabel = 'C';
     } else {
         emissionLabel = 'D';
@@ -127,8 +147,9 @@ function calculateAll() {
     // Sonuçları LocalStorage'a kaydet
     const resultData = {
         productName: productName,
-        carbonFootprint: carbonFootprintPerProduct.toFixed(2) + ' kg CO2e',
-        totalCarbonFootprint: totalCarbonFootprint.toFixed(2),
+        productUnit: productUnit,
+        carbonFootprint: carbonFootprintPerUnit.toFixed(4),
+        totalCarbonFootprint: totalCarbonFootprint.toFixed(4),
         serialNumber: serialNumber,
         emissionLabel: emissionLabel,
         emissionData: emissionData,
@@ -139,7 +160,7 @@ function calculateAll() {
     // Sonuçları Göster
     document.getElementById('product-name-result').innerText = productName;
     document.getElementById('vergi-no-result').innerText = vergiNo;
-    document.getElementById('carbon-result').innerText = carbonFootprintPerProduct.toFixed(2) + ' kg CO2e';
+    document.getElementById('carbon-result').innerText = `${carbonFootprintPerUnit.toFixed(4)} kg CO2e/${productUnit}`;
     document.getElementById('serial-number').innerText = serialNumber;
     document.getElementById('emission-label').innerText = emissionLabel;
     document.getElementById('result-panel').style.display = 'flex';
@@ -151,7 +172,7 @@ function calculateAll() {
         data: {
             labels: ['Enerji', 'Ulaşım', 'Atık', 'Su', 'Malzeme', 'Proses'],
             datasets: [{
-                label: 'Emisyon (kg CO2e)',
+                label: `Emisyon (kg CO2e/${productUnit})`,
                 data: [
                     emissionData.energy || 0,
                     emissionData.transport || 0,
@@ -188,7 +209,7 @@ function calculateAll() {
                     labels: {
                         color: '#1B5E20',
                         font: {
-                            size: 12 // Grafik etiketlerinin yazı boyutu küçültüldü
+                            size: 12
                         }
                     }
                 },
@@ -199,7 +220,7 @@ function calculateAll() {
                             if (label) {
                                 label += ': ';
                             }
-                            label += context.raw.toFixed(2) + ' kg CO2e';
+                            label += context.raw.toFixed(4) + ` kg CO2e/${productUnit}`;
                             return label;
                         }
                     }
@@ -219,104 +240,110 @@ function downloadReport() {
     doc.setFontSize(12);
     doc.text(`Ürün Adı: ${storedData.productName}`, 10, 20);
     doc.text(`Vergi Numarası: ${storedData.vergiNo}`, 10, 30);
-    doc.text(`Toplam Karbon Salınım Miktarı: ${storedData.carbonFootprint}`, 10, 40);
+    doc.text(`Toplam Karbon Salınım Miktarı: ${storedData.carbonFootprint} kg CO2e/${storedData.productUnit}`, 10, 40);
     doc.text(`Seri Numarası: ${storedData.serialNumber}`, 10, 50);
     doc.text(`Karbon Emisyon Etiketi: ${storedData.emissionLabel}`, 10, 60);
     doc.text('Emisyon Dağılımı (kg CO2e):', 10, 70);
-    doc.text(`Enerji: ${storedData.emissionData.energy.toFixed(2)}`, 10, 80);
-    doc.text(`Ulaşım: ${storedData.emissionData.transport.toFixed(2)}`, 10, 90);
-    doc.text(`Atık: ${storedData.emissionData.waste.toFixed(2)}`, 10, 100);
-    doc.text(`Su: ${storedData.emissionData.water.toFixed(2)}`, 10, 110);
-    doc.text(`Malzeme: ${storedData.emissionData.materials.toFixed(2)}`, 10, 120);
-    doc.text(`Proses: ${storedData.emissionData.process.toFixed(2)}`, 10, 130);
+    doc.text(`Enerji: ${storedData.emissionData.energy.toFixed(4)}`, 10, 80);
+    doc.text(`Ulaşım: ${storedData.emissionData.transport.toFixed(4)}`, 10, 90);
+    doc.text(`Atık: ${storedData.emissionData.waste.toFixed(4)}`, 10, 100);
+    doc.text(`Su: ${storedData.emissionData.water.toFixed(4)}`, 10, 110);
+    doc.text(`Malzeme: ${storedData.emissionData.materials.toFixed(4)}`, 10, 120);
+    doc.text(`Proses: ${storedData.emissionData.process.toFixed(4)}`, 10, 130);
 
     doc.save('karbon-salinim-raporu.pdf');
 }
 
-function getEnergyCoefficient(id) {
-    const coefficients = {
-        'coal-electricity': 0.95,        // kg CO2e/kWh
-        'natural-gas-electricity': 0.43, // kg CO2e/kWh
-        'nuclear-electricity': 0.012,    // kg CO2e/kWh
-        'hydro-electricity': 0.024,      // kg CO2e/kWh
-        'wind-electricity': 0.011,       // kg CO2e/kWh
-        'solar-electricity': 0.045,      // kg CO2e/kWh
-        'biomass-electricity': 0.23,     // kg CO2e/kWh
-        'natural-gas-consumption': 1.89, // kg CO2e/m3
-        'gasoline-consumption': 2.31,    // kg CO2e/litre
-        'diesel-consumption': 2.68,      // kg CO2e/litre
-        'lpg-consumption': 1.51,         // kg CO2e/litre
-        'motorin-consumption': 2.68,     // kg CO2e/litre
-        'coal-consumption': 2.4,         // kg CO2e/kg
-        'fuel-oil-consumption': 3.1,     // kg CO2e/kg
-        'mazot-consumption': 3.1         // kg CO2e/kg
+function getEnergyCoefficient(id, unit) {
+    const baseCoefficients = {
+        'coal-electricity': 0.90,
+        'natural-gas-electricity': 0.40,
+        'nuclear-electricity': 0.01,
+        'hydro-electricity': 0.02,
+        'wind-electricity': 0.01,
+        'solar-electricity': 0.04,
+        'biomass-electricity': 0.20,
+        'natural-gas-consumption': 1.85,
+        'gasoline-consumption': 2.30,
+        'diesel-consumption': 2.65,
+        'lpg-consumption': 1.50,
+        'motorin-consumption': 2.65,
+        'coal-consumption': 2.35,
+        'fuel-oil-consumption': 3.05,
+        'mazot-consumption': 3.05
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }
 
-function getTransportCoefficient(id) {
-    const coefficients = {
-        'company-gasoline-cars': 0.18,   // kg CO2e/km
-        'company-diesel-cars': 0.16,     // kg CO2e/km
-        'company-lpg-cars': 0.14,        // kg CO2e/km
-        'company-electric-cars': 0.05,   // kg CO2e/km
-        'company-hybrid-cars': 0.09,     // kg CO2e/km
-        'personal-car-usage': 0.18,      // kg CO2e/km
-        'public-transport-usage': 0.04,  // kg CO2e/km
-        'bicycle-usage': 0,              // kg CO2e/km
-        'walking-distance': 0,           // kg CO2e/km
-        'short-flights': 90,             // kg CO2e/uçuş
-        'medium-flights': 150,           // kg CO2e/uçuş
-        'long-flights': 250              // kg CO2e/uçuş
+function getTransportCoefficient(id, unit) {
+    const baseCoefficients = {
+        'company-gasoline-cars': 0.17,
+        'company-diesel-cars': 0.15,
+        'company-lpg-cars': 0.13,
+        'company-electric-cars': 0.04,
+        'company-hybrid-cars': 0.08,
+        'personal-car-usage': 0.17,
+        'public-transport-usage': 0.03,
+        'bicycle-usage': 0,
+        'walking-distance': 0,
+        'short-flights': 85,
+        'medium-flights': 140,
+        'long-flights': 240
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }
 
-function getWasteCoefficient(id) {
-    const coefficients = {
-        'composting': 0.02,              // kg CO2e/kg
-        'landfilling': 0.5,              // kg CO2e/kg
-        'incineration': 0.8,             // kg CO2e/kg
-        'paper-recycling': 0.05,         // kg CO2e/kg
-        'plastic-recycling': 0.1,        // kg CO2e/kg
-        'glass-recycling': 0.03,         // kg CO2e/kg
-        'metal-recycling': 0.02          // kg CO2e/kg
+function getWasteCoefficient(id, unit) {
+    const baseCoefficients = {
+        'composting': 0.01,
+        'landfilling': 0.45,
+        'incineration': 0.75,
+        'paper-recycling': 0.04,
+        'plastic-recycling': 0.09,
+        'glass-recycling': 0.02,
+        'metal-recycling': 0.01
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }
 
-function getWaterCoefficient(id) {
-    const coefficients = {
-        'drinking-water': 0.0003,        // kg CO2e/litre
-        'process-water': 0.0005,         // kg CO2e/litre
-        'waste-water-treatment': 0.0007  // kg CO2e/litre
+function getWaterCoefficient(id, unit) {
+    const baseCoefficients = {
+        'drinking-water': 0.0002,
+        'process-water': 0.0004,
+        'waste-water-treatment': 0.0006
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }
 
-function getMaterialsCoefficient(id) {
-    const coefficients = {
-        'steel-production': 1.8,         // kg CO2e/kg
-        'aluminium-production': 11,      // kg CO2e/kg
-        'cement-production': 0.9,        // kg CO2e/kg
-        'paper-production': 1.1,         // kg CO2e/kg
-        'road-transport': 0.1,           // kg CO2e/km
-        'sea-transport': 0.02,           // kg CO2e/km
-        'air-transport': 0.6             // kg CO2e/km
+function getMaterialsCoefficient(id, unit) {
+    const baseCoefficients = {
+        'steel-production': 1.7,
+        'aluminium-production': 10.5,
+        'cement-production': 0.85,
+        'paper-production': 1.0,
+        'road-transport': 0.09,
+        'sea-transport': 0.01,
+        'air-transport': 0.55
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }
 
-function getProcessCoefficient(id) {
-    const coefficients = {
-        'ammonia-production': 1.6,       // kg CO2e/kg
-        'nitric-acid-production': 2.7,   // kg CO2e/kg
-        'adipic-acid-production': 3.0,   // kg CO2e/kg
-        'iron-steel-production': 1.8,    // kg CO2e/kg
-        'cement-production-industrial': 0.9, // kg CO2e/kg
-        'ceramic-production': 0.6,       // kg CO2e/kg
-        'glass-production': 0.8,         // kg CO2e/kg
-        'chemical-production': 1.5       // kg CO2e/kg
+function getProcessCoefficient(id, unit) {
+    const baseCoefficients = {
+        'ammonia-production': 1.5,
+        'nitric-acid-production': 2.6,
+        'adipic-acid-production': 2.9,
+        'iron-steel-production': 1.7,
+        'cement-production-industrial': 0.85,
+        'ceramic-production': 0.55,
+        'glass-production': 0.75,
+        'chemical-production': 1.4
     };
-    return coefficients[id] || 0;
+    const scaleFactor = unit === 'kg' ? 1 : 0.8;
+    return (baseCoefficients[id] || 0) * scaleFactor;
 }

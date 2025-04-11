@@ -13,16 +13,15 @@ function verifySerialNumber() {
 
     if (storedData && serialNumberInput === storedData.serialNumber) {
         document.getElementById('product-name').innerText = storedData.productName;
-        document.getElementById('carbon-result').innerText = storedData.carbonFootprint;
+        document.getElementById('carbon-result').innerText = `${storedData.carbonFootprint} kg CO2e/${storedData.productUnit}`;
         document.getElementById('serial-number').innerText = storedData.serialNumber;
         document.getElementById('emission-label').innerText = storedData.emissionLabel;
         resultContainer.style.display = 'flex';
 
         const updatedEmission = parseFloat(storedData.carbonFootprint);
         const emissionData = storedData.emissionData;
-
-        const totalEmission = emissionData.energy + emissionData.transport + emissionData.waste + emissionData.water + emissionData.materials + emissionData.process;
-        const updatedTotalEmission = updatedEmission * (totalEmission / parseFloat(storedData.carbonFootprint.split(' ')[0]));
+        const productUnit = storedData.productUnit;
+        const totalCarbonFootprint = parseFloat(storedData.totalCarbonFootprint);
 
         const ctx = document.getElementById('simple-emission-chart').getContext('2d');
         new Chart(ctx, {
@@ -30,14 +29,14 @@ function verifySerialNumber() {
             data: {
                 labels: ['Enerji', 'Ulaşım', 'Atık', 'Su', 'Malzeme', 'Proses'],
                 datasets: [{
-                    label: 'Emisyon (kg CO2e)',
+                    label: `Emisyon (kg CO2e/${productUnit})`,
                     data: [
-                        (emissionData.energy / totalEmission) * updatedTotalEmission || 0,
-                        (emissionData.transport / totalEmission) * updatedTotalEmission || 0,
-                        (emissionData.waste / totalEmission) * updatedTotalEmission || 0,
-                        (emissionData.water / totalEmission) * updatedTotalEmission || 0,
-                        (emissionData.materials / totalEmission) * updatedTotalEmission || 0,
-                        (emissionData.process / totalEmission) * updatedTotalEmission || 0
+                        (emissionData.energy / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0,
+                        (emissionData.transport / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0,
+                        (emissionData.waste / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0,
+                        (emissionData.water / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0,
+                        (emissionData.materials / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0,
+                        (emissionData.process / parseFloat(storedData.totalCarbonFootprint)) * totalCarbonFootprint || 0
                     ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',
@@ -78,7 +77,7 @@ function verifySerialNumber() {
                                 if (label) {
                                     label += ': ';
                                 }
-                                label += context.raw.toFixed(2) + ' kg CO2e';
+                                label += context.raw.toFixed(4) + ` kg CO2e/${productUnit}`;
                                 return label;
                             }
                         }

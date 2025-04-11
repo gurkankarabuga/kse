@@ -43,49 +43,54 @@
         <h1>Karbon Emisyonu Veri Girişi</h1>
         <label for="product-name">Ürün Adı:</label>
         <input type="text" id="product-name" name="product-name">
-        <label for="product-quantity">Ürün/Hizmet Miktarı (Adet):</label>
-        <input type="number" id="product-quantity" name="product-quantity" style="width: 200px;">
+        <label for="product-unit">Ürün/Hizmet Birimi:</label>
+        <select id="product-unit" name="product-unit">
+            <option value="kg">Kilogram</option>
+            <option value="litre">Litre</option>
+        </select>
+        <label for="product-quantity">Ürün/Hizmet Miktarı:</label>
+        <input type="number" id="product-quantity" name="product-quantity" style="width: 200px;" min="0.001" step="0.001">
         
         <section id="energy-consumption">
             <h2>Enerji Tüketimi</h2>
             <form id="energy-form">
                 <h3>Elektrik Tüketimi</h3>
                 <label for="coal-electricity">Kömür kaynaklı elektrik (kWh):</label>
-                <input type="number" id="coal-electricity" name="coal-electricity"><br>
+                <input type="number" id="coal-electricity" name="coal-electricity" min="0"><br>
                 <label for="natural-gas-electricity">Doğal gaz kaynaklı elektrik (kWh):</label>
-                <input type="number" id="natural-gas-electricity" name="natural-gas-electricity"><br>
+                <input type="number" id="natural-gas-electricity" name="natural-gas-electricity" min="0"><br>
                 <label for="nuclear-electricity">Nükleer enerji kaynaklı elektrik (kWh):</label>
-                <input type="number" id="nuclear-electricity" name="nuclear-electricity"><br>
+                <input type="number" id="nuclear-electricity" name="nuclear-electricity" min="0"><br>
                 <label for="hydro-electricity">Hidroelektrik kaynaklı elektrik (kWh):</label>
-                <input type="number" id="hydro-electricity" name="hydro-electricity"><br>
+                <input type="number" id="hydro-electricity" name="hydro-electricity" min="0"><br>
                 <label for="wind-electricity">Rüzgar enerjisi kaynaklı elektrik (kWh):</label>
-                <input type="number" id="wind-electricity" name="wind-electricity"><br>
+                <input type="number" id="wind-electricity" name="wind-electricity" min="0"><br>
                 <label for="solar-electricity">Güneş enerjisi kaynaklı elektrik (kWh):</label>
-                <input type="number" id="solar-electricity" name="solar-electricity"><br>
+                <input type="number" id="solar-electricity" name="solar-electricity" min="0"><br>
                 <label for="biomass-electricity">Biyokütle kaynaklı elektrik (kWh):</label>
-                <input type="number" id="biomass-electricity" name="biomass-electricity"><br>
+                <input type="number" id="biomass-electricity" name="biomass-electricity" min="0"><br>
                 
                 <h3>Doğal Gaz Tüketimi</h3>
                 <label for="natural-gas-consumption">Doğal gaz tüketimi (m3):</label>
-                <input type="number" id="natural-gas-consumption" name="natural-gas-consumption"><br>
+                <input type="number" id="natural-gas-consumption" name="natural-gas-consumption" min="0"><br>
                 
                 <h3>Likit Yakıtlar</h3>
                 <label for="gasoline-consumption">Benzin tüketimi (litre):</label>
-                <input type="number" id="gasoline-consumption" name="gasoline-consumption"><br>
+                <input type="number" id="gasoline-consumption" name="gasoline-consumption" min="0"><br>
                 <label for="diesel-consumption">Dizel tüketimi (litre):</label>
-                <input type="number" id="diesel-consumption" name="diesel-consumption"><br>
+                <input type="number" id="diesel-consumption" name="diesel-consumption" min="0"><br>
                 <label for="lpg-consumption">LPG tüketimi (litre):</label>
-                <input type="number" id="lpg-consumption" name="lpg-consumption"><br>
+                <input type="number" id="lpg-consumption" name="lpg-consumption" min="0"><br>
                 <label for="motorin-consumption">Motorin tüketimi (litre):</label>
-                <input type="number" id="motorin-consumption" name="motorin-consumption"><br>
+                <input type="number" id="motorin-consumption" name="motorin-consumption" min="0"><br>
                 
                 <h3>Diğer Fosil Yakıtlar</h3>
                 <label for="coal-consumption">Kömür tüketimi (kg):</label>
-                <input type="number" id="coal-consumption" name="coal-consumption"><br>
+                <input type="number" id="coal-consumption" name="coal-consumption" min="0"><br>
                 <label for="fuel-oil-consumption">Fuel-oil tüketimi (kg):</label>
-                <input type="number" id="fuel-oil-consumption" name="fuel-oil-consumption"><br>
+                <input type="number" id="fuel-oil-consumption" name="fuel-oil-consumption" min="0"><br>
                 <label for="mazot-consumption">Mazot tüketimi (kg):</label>
-                <input type="number" id="mazot-consumption" name="mazot-consumption"><br>
+                <input type="number" id="mazot-consumption" name="mazot-consumption" min="0"><br>
             </form>
         </section>
 
@@ -94,33 +99,33 @@
             <form id="transport-form">
                 <h3>Şirket Araçları</h3>
                 <label for="company-gasoline-cars">Benzinli araçlar (km):</label>
-                <input type="number" id="company-gasoline-cars" name="company-gasoline-cars"><br>
+                <input type="number" id="company-gasoline-cars" name="company-gasoline-cars" min="0"><br>
                 <label for="company-diesel-cars">Dizel araçlar (km):</label>
-                <input type="number" id="company-diesel-cars" name="company-diesel-cars"><br>
+                <input type="number" id="company-diesel-cars" name="company-diesel-cars" min="0"><br>
                 <label for="company-lpg-cars">LPG'li araçlar (km):</label>
-                <input type="number" id="company-lpg-cars" name="company-lpg-cars"><br>
+                <input type="number" id="company-lpg-cars" name="company-lpg-cars" min="0"><br>
                 <label for="company-electric-cars">Elektrikli araçlar (km):</label>
-                <input type="number" id="company-electric-cars" name="company-electric-cars"><br>
+                <input type="number" id="company-electric-cars" name="company-electric-cars" min="0"><br>
                 <label for="company-hybrid-cars">Hibrit araçlar (km):</label>
-                <input type="number" id="company-hybrid-cars" name="company-hybrid-cars"><br>
+                <input type="number" id="company-hybrid-cars" name="company-hybrid-cars" min="0"><br>
                 
                 <h3>Çalışanların Ulaşımı</h3>
                 <label for="personal-car-usage">Kişisel araç kullanımı (km):</label>
-                <input type="number" id="personal-car-usage" name="personal-car-usage"><br>
+                <input type="number" id="personal-car-usage" name="personal-car-usage" min="0"><br>
                 <label for="public-transport-usage">Toplu taşıma araçları (km):</label>
-                <input type="number" id="public-transport-usage" name="public-transport-usage"><br>
+                <input type="number" id="public-transport-usage" name="public-transport-usage" min="0"><br>
                 <label for="bicycle-usage">Bisiklet (km):</label>
-                <input type="number" id="bicycle-usage" name="bicycle-usage"><br>
+                <input type="number" id="bicycle-usage" name="bicycle-usage" min="0"><br>
                 <label for="walking-distance">Yürüyerek ulaşım (km):</label>
-                <input type="number" id="walking-distance" name="walking-distance"><br>
+                <input type="number" id="walking-distance" name="walking-distance" min="0"><br>
                 
                 <h3>Hava Yolu ile Seyahat</h3>
                 <label for="short-flights">Kısa mesafe uçuşları (0-500 km) (adet):</label>
-                <input type="number" id="short-flights" name="short-flights"><br>
+                <input type="number" id="short-flights" name="short-flights" min="0"><br>
                 <label for="medium-flights">Orta mesafe uçuşları (500-1600 km) (adet):</label>
-                <input type="number" id="medium-flights" name="medium-flights"><br>
+                <input type="number" id="medium-flights" name="medium-flights" min="0"><br>
                 <label for="long-flights">Uzun mesafe uçuşları (1600+ km) (adet):</label>
-                <input type="number" id="long-flights" name="long-flights"><br>
+                <input type="number" id="long-flights" name="long-flights" min="0"><br>
             </form>
         </section>
 
@@ -129,21 +134,21 @@
             <form id="waste-form">
                 <h3>Organik Atıklar</h3>
                 <label for="composting">Kompostlama (kg):</label>
-                <input type="number" id="composting" name="composting"><br>
+                <input type="number" id="composting" name="composting" min="0"><br>
                 <label for="landfilling">Çöp sahasına gömme (kg):</label>
-                <input type="number" id="landfilling" name="landfilling"><br>
+                <input type="number" id="landfilling" name="landfilling" min="0"><br>
                 <label for="incineration">Yakma (kg):</label>
-                <input type="number" id="incineration" name="incineration"><br>
+                <input type="number" id="incineration" name="incineration" min="0"><br>
                 
                 <h3>Geri Dönüştürülebilir Atıklar</h3>
                 <label for="paper-recycling">Kağıt (kg):</label>
-                <input type="number" id="paper-recycling" name="paper-recycling"><br>
+                <input type="number" id="paper-recycling" name="paper-recycling" min="0"><br>
                 <label for="plastic-recycling">Plastik (kg):</label>
-                <input type="number" id="plastic-recycling" name="plastic-recycling"><br>
+                <input type="number" id="plastic-recycling" name="plastic-recycling" min="0"><br>
                 <label for="glass-recycling">Cam (kg):</label>
-                <input type="number" id="glass-recycling" name="glass-recycling"><br>
+                <input type="number" id="glass-recycling" name="glass-recycling" min="0"><br>
                 <label for="metal-recycling">Metal (kg):</label>
-                <input type="number" id="metal-recycling" name="metal-recycling"><br>
+                <input type="number" id="metal-recycling" name="metal-recycling" min="0"><br>
             </form>
         </section>
 
@@ -152,13 +157,13 @@
             <form id="water-form">
                 <h3>Su Kullanımı</h3>
                 <label for="drinking-water">İçme suyu tüketimi (litre):</label>
-                <input type="number" id="drinking-water" name="drinking-water"><br>
+                <input type="number" id="drinking-water" name="drinking-water" min="0"><br>
                 <label for="process-water">İşleme suyu tüketimi (litre):</label>
-                <input type="number" id="process-water" name="process-water"><br>
+                <input type="number" id="process-water" name="process-water" min="0"><br>
                 
                 <h3>Atık Su Arıtma</h3>
                 <label for="waste-water-treatment">Atık su arıtma (litre):</label>
-                <input type="number" id="waste-water-treatment" name="waste-water-treatment"><br>
+                <input type="number" id="waste-water-treatment" name="waste-water-treatment" min="0"><br>
             </form>
         </section>
 
@@ -167,21 +172,21 @@
             <form id="materials-form">
                 <h3>Üretim Süreçleri</h3>
                 <label for="steel-production">Çelik üretimi (kg):</label>
-                <input type="number" id="steel-production" name="steel-production"><br>
+                <input type="number" id="steel-production" name="steel-production" min="0"><br>
                 <label for="aluminium-production">Alüminyum üretimi (kg):</label>
-                <input type="number" id="aluminium-production" name="aluminium-production"><br>
+                <input type="number" id="aluminium-production" name="aluminium-production" min="0"><br>
                 <label for="cement-production">Çimento üretimi (kg):</label>
-                <input type="number" id="cement-production" name="cement-production"><br>
+                <input type="number" id="cement-production" name="cement-production" min="0"><br>
                 <label for="paper-production">Kağıt üretimi (kg):</label>
-                <input type="number" id="paper-production" name="paper-production"><br>
+                <input type="number" id="paper-production" name="paper-production" min="0"><br>
                 
                 <h3>Lojistik Hizmetleri</h3>
                 <label for="road-transport">Karayolu taşımacılığı (km):</label>
-                <input type="number" id="road-transport" name="road-transport"><br>
+                <input type="number" id="road-transport" name="road-transport" min="0"><br>
                 <label for="sea-transport">Denizyolu taşımacılığı (km):</label>
-                <input type="number" id="sea-transport" name="sea-transport"><br>
+                <input type="number" id="sea-transport" name="sea-transport" min="0"><br>
                 <label for="air-transport">Havayolu taşımacılığı (km):</label>
-                <input type="number" id="air-transport" name="air-transport"><br>
+                <input type="number" id="air-transport" name="air-transport" min="0"><br>
             </form>
         </section>
 
@@ -190,23 +195,23 @@
             <form id="process-form">
                 <h3>Kimyasal Reaksiyonlar</h3>
                 <label for="ammonia-production">Ammonia üretimi (kg):</label>
-                <input type="number" id="ammonia-production" name="ammonia-production"><br>
+                <input type="number" id="ammonia-production" name="ammonia-production" min="0"><br>
                 <label for="nitric-acid-production">Nitrik asit üretimi (kg):</label>
-                <input type="number" id="nitric-acid-production" name="nitric-acid-production"><br>
+                <input type="number" id="nitric-acid-production" name="nitric-acid-production" min="0"><br>
                 <label for="adipic-acid-production">Adipik asit üretimi (kg):</label>
-                <input type="number" id="adipic-acid-production" name="adipic-acid-production"><br>
+                <input type="number" id="adipic-acid-production" name="adipic-acid-production" min="0"><br>
                 
                 <h3>Endüstriyel Prosesler</h3>
                 <label for="iron-steel-production">Demir-çelik üretimi (kg):</label>
-                <input type="number" id="iron-steel-production" name="iron-steel-production"><br>
+                <input type="number" id="iron-steel-production" name="iron-steel-production" min="0"><br>
                 <label for="cement-production-industrial">Çimento üretimi (kg):</label>
-                <input type="number" id="cement-production-industrial" name="cement-production-industrial"><br>
+                <input type="number" id="cement-production-industrial" name="cement-production-industrial" min="0"><br>
                 <label for="ceramic-production">Seramik üretimi (kg):</label>
-                <input type="number" id="ceramic-production" name="ceramic-production"><br>
+                <input type="number" id="ceramic-production" name="ceramic-production" min="0"><br>
                 <label for="glass-production">Cam üretimi (kg):</label>
-                <input type="number" id="glass-production" name="glass-production"><br>
+                <input type="number" id="glass-production" name="glass-production" min="0"><br>
                 <label for="chemical-production">Kimyasal üretim süreçleri (kg):</label>
-                <input type="number" id="chemical-production" name="chemical-production"><br>
+                <input type="number" id="chemical-production" name="chemical-production" min="0"><br>
             </form>
         </section>
 

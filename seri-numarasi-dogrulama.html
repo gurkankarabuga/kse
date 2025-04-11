@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="serino.js"></script>
-    <title>Karbon Salınım Etiketi - Doğrulama</title>
+    <title>Karbon Salınım Etiketi - Seri Numarası Doğrulama</title>
 </head>
 <body>
     <header>
@@ -27,8 +27,8 @@
         </nav>
     </header>
 
-    <main id="main-content">
-        <h1>Seri Numarası Sorgulama</h1>
+    <main>
+        <h1>Seri Numarası Doğrulama</h1>
         <label for="serial-number-input">Seri Numarası:</label>
         <input type="text" id="serial-number-input" name="serial-number-input">
         <button onclick="verifySerialNumber()">Sorgula</button>
@@ -37,12 +37,9 @@
             <div class="panel-content">
                 <span class="close-panel" onclick="closePanel('result-panel')">X</span>
                 <h2>Ürün Adı: <span id="product-name"></span></h2>
-                <h2>Toplam Karbon Salınım Miktarı</h2>
-                <p id="carbon-result"></p>
-                <h3>Seri Numarası</h3>
-                <p id="serial-number"></p>
-                <h3>Karbon Emisyon Etiketi</h3>
-                <p id="emission-label"></p>
+                <h2>Karbon Salınım Miktarı: <span id="carbon-result"></span></h2>
+                <h3>Seri Numarası: <span id="serial-number"></span></h3>
+                <h3>Karbon Emisyon Etiketi: <span id="emission-label"></span></h3>
                 <h3>Emisyon Dağılımı</h3>
                 <div class="chart-container">
                     <canvas id="simple-emission-chart"></canvas>

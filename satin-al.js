@@ -19,6 +19,8 @@ function login() {
 
 let currentEmission = 0;
 let targetEmission = 0;
+let productUnit = '';
+let productQuantity = 0;
 
 function verifySerialNumber() {
     const serialNumberInput = document.getElementById('serial-number-input').value;
@@ -29,11 +31,12 @@ function verifySerialNumber() {
     if (storedData && serialNumberInput === storedData.serialNumber) {
         document.getElementById('product-name').innerText = storedData.productName;
         currentEmission = parseFloat(storedData.carbonFootprint);
-        document.getElementById('current-emission').innerText = currentEmission.toFixed(2) + ' kg CO2e';
+        productUnit = storedData.productUnit;
+        productQuantity = parseFloat(storedData.totalCarbonFootprint) / currentEmission; // Miktarı geri hesapla
+        document.getElementById('current-emission').innerText = `${currentEmission.toFixed(4)} kg CO2e/${productUnit}`;
         document.getElementById('current-label').innerText = storedData.emissionLabel;
         resultContainer.style.display = 'flex';
 
-        // Mevcut etikete göre dropdown seçeneklerini sınırlandır
         const targetLabelSelect = document.getElementById('target-label');
         const currentLabel = storedData.emissionLabel;
         const labels = ['A++', 'A+', 'A', 'B', 'C', 'D'];
@@ -56,13 +59,20 @@ function calculateCost() {
         return;
     }
 
-    const emissionTargets = {
-        'A++': 0.99,
-        'A+': 1,
-        'A': 5,
-        'B': 10,
-        'C': 25,
-        'D': 50
+    const emissionTargets = productUnit === 'kg' ? {
+        'A++': 0.5,
+        'A+': 1.0,
+        'A': 1.5,
+        'B': 2.0,
+        'C': 2.5,
+        'D': 3.0
+    } : {
+        'A++': 0.4,
+        'A+': 0.8,
+        'A': 1.2,
+        'B': 1.6,
+        'C': 2.0,
+        'D': 2.4
     };
 
     targetEmission = emissionTargets[targetLabel];
@@ -72,9 +82,17 @@ function calculateCost() {
         return;
     }
 
-    const baseCostPerKg = 0.74; // 1 kg CO2e = 0.74 TL (20 Euro/ton, 1 Euro = 37 TL)
-    const costMultiplier = 1 + (deltaEmission / 50);
-    const totalCost = deltaEmission * baseCostPerKg * costMultiplier;
+    const baseCostPerKg = 2.8; // Dünya karbon fiyatı: 80 USD/ton = 2.8 TL/kg (35 TL/USD)
+    const costMultipliers = {
+        'A++': 2.0,
+        'A+': 1.8,
+        'A': 1.6,
+        'B': 1.4,
+        'C': 1.2,
+        'D': 1.0
+    };
+    const multiplier = costMultipliers[targetLabel];
+    const totalCost = (deltaEmission * baseCostPerKg * multiplier * productQuantity) / 2; // Tutar yarıya indirildi
 
     document.getElementById('cost').innerText = totalCost.toFixed(2);
 }
@@ -87,32 +105,17 @@ function makePayment() {
     }
 
     const storedData = JSON.parse(localStorage.getItem('carbonEmissionData'));
-    storedData.carbonFootprint = targetEmission.toFixed(2) + ' kg CO2e';
-
-    const emissionTargets = {
-        'A++': 0.99,
-        'A+': 1,
-        'A': 5,
-        'B': 10,
-        'C': 25,
-        'D': 50
-    };
-    let newLabel = 'D';
-    for (const [label, threshold] of Object.entries(emissionTargets)) {
-        if (targetEmission <= threshold) {
-            newLabel = label;
-            break;
-        }
-    }
-    storedData.emissionLabel = newLabel;
+    storedData.carbonFootprint = targetEmission.toFixed(4);
+    storedData.emissionLabel = document.getElementById('target-label').value;
+    storedData.totalCarbonFootprint = (targetEmission * productQuantity).toFixed(4);
 
     localStorage.setItem('carbonEmissionData', JSON.stringify(storedData));
 
-    const treeCostPerYear = 110.45; // 1 ağaç yılda 6.7 ton CO2 tüketiyor, maliyeti 110.45 TL
-    const treeCount = Math.ceil(totalCost / treeCostPerYear);
+    const treeCostPerYear = 6700; // 1 ağaç yılda 6.7 ton CO2 emiyor (TEMA verisi)
+    const treeCount = Math.ceil((currentEmission - targetEmission) * productQuantity / 6700 * 4); // Ağaç sayısı 4 kat artırıldı
 
-    document.getElementById('new-emission').innerText = targetEmission.toFixed(2) + ' kg CO2e';
-    document.getElementById('new-label').innerText = newLabel;
+    document.getElementById('new-emission').innerText = `${targetEmission.toFixed(4)} kg CO2e/${productUnit}`;
+    document.getElementById('new-label').innerText = storedData.emissionLabel;
     document.getElementById('tree-contribution').innerText = `Ödemenizle ${treeCount} ağaç dikimine katkı sağladınız.`;
     document.getElementById('result-panel').style.display = 'none';
     document.getElementById('payment-result-panel').style.display = 'flex';
